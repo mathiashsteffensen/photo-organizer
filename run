@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+
+require_relative "./lib/photo_organizer"
+
+def print_usage
+ puts ""
+ puts "--- USAGE:"
+ puts "    ./run --target=/a/folder --out=/another/folder"
+ puts ""
+end
+
+target = ARGV.find { |arg| arg.include?("--target") }
+out = ARGV.find { |arg| arg.include?("--out") }
+
+if target.nil?
+	puts "No target folder provided"
+	print_usage
+	exit 1
+end
+
+if out.nil?
+	puts "No out folder provided"
+	print_usage
+	exit 1
+end
+
+PhotoOrganizer.target_dir = target.split("=")[1]
+PhotoOrganizer.out_dir = out.split("=")[1]
+
+PhotoOrganizer.run

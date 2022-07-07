@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+OS_NAME="$(uname -s)"
+
+print() {
+	echo ""
+	echo "--- $1"
+	echo ""
+}
+
+print "Installing native dependencies"
+
+if [ $OS_NAME = "Darwin" ]
+then
+	brew install libexif # Assume Homebrew is installed
+elif [ $OS_NAME = "Linux" ]
+then
+	sudo apt-get install libexif-dev # Assume Debian based Linux distro
+else
+	echo "You are running on an unsupported operating system, only MacOS and Debian Linux is supported"
+	exit 1
+fi
+
+print "Installing Ruby dependencies"
+
+bundle install
